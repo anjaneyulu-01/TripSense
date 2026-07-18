@@ -99,9 +99,18 @@ export default function LandingPage() {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-mesh py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+      <section className="relative overflow-hidden py-16 lg:py-24">
+        {/* Scenic traveler background image with overlay mask */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/landing_hero_bg.png"
+            alt="Scenic travel background"
+            className="h-full w-full object-cover opacity-[0.12] dark:opacity-[0.06] dark:brightness-[0.3]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="relative z-10 grid gap-12 lg:grid-cols-12 lg:items-center">
             {/* Left Column (Text & Action buttons) */}
             <div className="text-center lg:col-span-7 lg:text-left">
               <motion.div initial="hidden" animate="show" variants={fadeUp} transition={{ duration: 0.5 }}>

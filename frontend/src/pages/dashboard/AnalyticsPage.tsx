@@ -20,15 +20,20 @@ export default function AnalyticsPage() {
   const trips = useTrips()
 
   const stats = useMemo(() => {
-    const withBudget = trips.filter((t) => t.collected.budget)
-    const totalBudget = withBudget.reduce((s, t) => s + (t.collected.budget ?? 0), 0)
+    const withBudget = trips.filter((t) => t.collected?.budget)
+    const totalBudget = withBudget.reduce((s, t) => s + (t.collected?.budget ?? 0), 0)
     const avgBudget = withBudget.length ? Math.round(totalBudget / withBudget.length) : 0
-    const totalDays = trips.reduce((s, t) => s + (t.collected.duration_days ?? 0), 0)
+    const totalDays = trips.reduce((s, t) => s + (t.collected?.duration_days ?? 0), 0)
     const favorites = trips.filter((t) => t.favorite).length
 
     const interestCounts: Record<string, number> = {}
-    for (const t of trips)
-      for (const i of t.collected.interests) interestCounts[i] = (interestCounts[i] ?? 0) + 1
+    for (const t of trips) {
+      if (t.collected?.interests) {
+        for (const i of t.collected.interests) {
+          interestCounts[i] = (interestCounts[i] ?? 0) + 1
+        }
+      }
+    }
     const interests = Object.entries(interestCounts)
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count)
@@ -36,7 +41,7 @@ export default function AnalyticsPage() {
 
     const budgetByTrip = withBudget
       .slice(0, 8)
-      .map((t) => ({ name: t.title.slice(0, 12), budget: t.collected.budget ?? 0 }))
+      .map((t) => ({ name: t.title.slice(0, 12), budget: t.collected?.budget ?? 0 }))
 
     return { totalBudget, avgBudget, totalDays, favorites, interests, budgetByTrip }
   }, [trips])

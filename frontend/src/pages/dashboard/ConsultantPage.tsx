@@ -118,7 +118,7 @@ export default function ConsultantPage() {
   const isEmpty = messages.length === 0
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+    <div className="w-full">
       {/* Hero AI card */}
       <div className="flex h-[calc(100vh-9.5rem)] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface shadow-[var(--shadow-soft)]">
         {/* Signature gradient top strip */}
@@ -166,6 +166,25 @@ export default function ConsultantPage() {
                 <option key={l.value} value={l.value}>{l.label}</option>
               ))}
             </select>
+          </div>
+        </div>
+
+        {/* Trip details inside chatbox banner */}
+        <div className="border-b border-border bg-surface-2/40 px-5 py-3 text-xs">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-foreground">Trip Details</span>
+              <span className="rounded bg-primary/10 px-1.5 py-0.5 font-bold text-primary">
+                {collected ? Math.round((['budget', 'duration_days', 'starting_city', 'travel_type', 'interests'].filter(k => collected[k as keyof CollectedInfo] !== null && collected[k as keyof CollectedInfo] !== undefined && collected[k as keyof CollectedInfo] !== '').length / 5) * 100) : 0}% Complete
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-muted">
+              <span>💰 Budget: <strong className="text-foreground">{collected?.budget ? `${collected.currency ?? 'INR'} ${collected.budget.toLocaleString()}` : '—'}</strong></span>
+              <span>📅 Duration: <strong className="text-foreground">{collected?.duration_days ? `${collected.duration_days} days` : '—'}</strong></span>
+              <span>📍 From: <strong className="text-foreground">{collected?.starting_city ?? '—'}</strong></span>
+              <span>✈️ Destination: <strong className="text-foreground">{collected?.destination ?? '—'}</strong></span>
+              <span>👥 Type: <strong className="text-foreground">{collected?.travel_type ?? '—'}</strong></span>
+            </div>
           </div>
         </div>
 
@@ -242,11 +261,6 @@ export default function ConsultantPage() {
           </div>
         </form>
       </div>
-
-      {/* Collected-info side panel */}
-      <div className="hidden lg:block">
-        <CollectedInfoPanel info={collected} readyToPlan={readyToPlan} />
-      </div>
     </div>
   )
 }
@@ -278,9 +292,6 @@ function MessageBubble({ message }: { message: ChatMessage }) {
         >
           {message.pending ? <TypingDots /> : message.content}
         </div>
-        {message.provider && (
-          <Badge tone="muted" className="text-[10px]">via {message.provider}</Badge>
-        )}
       </div>
     </motion.div>
   )

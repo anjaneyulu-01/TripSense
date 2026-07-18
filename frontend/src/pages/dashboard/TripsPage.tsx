@@ -75,16 +75,16 @@ export function TripGrid({
                 </div>
 
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {t.collected.duration_days && (
+                  {t.collected?.duration_days && (
                     <Badge tone="muted"><Calendar className="h-3 w-3" /> {t.collected.duration_days}d</Badge>
                   )}
-                  {t.collected.budget && (
+                  {t.collected?.budget && (
                     <Badge tone="muted">
                       <Wallet className="h-3 w-3" />
                       {formatCurrency(t.collected.budget, t.collected.currency ?? 'INR')}
                     </Badge>
                   )}
-                  {t.collected.travel_type && <Badge tone="primary">{t.collected.travel_type}</Badge>}
+                  {t.collected?.travel_type && <Badge tone="primary">{t.collected.travel_type}</Badge>}
                 </div>
 
                 {t.summary && (
