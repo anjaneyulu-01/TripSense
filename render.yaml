@@ -9,6 +9,8 @@ services:
     envVars:
       - key: APP_ENV
         value: production
+      - key: PYTHON_VERSION
+        value: "3.12"
       - key: JWT_SECRET
         generateValue: true  # Render will automatically generate a secure random secret key
       - key: MONGODB_URI
