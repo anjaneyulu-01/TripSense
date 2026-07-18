@@ -19,7 +19,7 @@ async def health() -> dict:
         providers = get_ai_service().available_providers
     except RuntimeError:
         providers = []
-    # Opportunistically (re)connect so the reported status self-heals.
+
     db_connected = await ensure_connected()
     return {
         "status": "ok",
@@ -28,3 +28,8 @@ async def health() -> dict:
         "ai_providers": providers,
         "primary_provider": providers[0] if providers else None,
     }
+
+
+
+
+
