@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, type FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -41,6 +42,7 @@ const nextId = () => `m-${Date.now()}-${idCounter++}`
 
 export default function ConsultantPage() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const firstName = user?.full_name.split(' ')[0] ?? 'traveler'
 
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -68,6 +70,27 @@ export default function ConsultantPage() {
       ])
       // Speak the reply aloud when voice output is enabled.
       if (voiceOn) speech.speak(res.reply)
+
+      // Check for assistant redirection commands
+      const lowerReply = res.reply.toLowerCase()
+      if (lowerReply.includes('redirecting you to the budget') || lowerReply.includes('redirecting to the budget') || lowerReply.includes('redirecting to budget')) {
+        setTimeout(() => navigate('/app/budget'), 1500)
+      } else if (
+        lowerReply.includes('redirecting you to the packing') || lowerReply.includes('redirecting to the packing') || lowerReply.includes('redirecting to packing') ||
+        lowerReply.includes('redirecting you to the package') || lowerReply.includes('redirecting to the package') || lowerReply.includes('redirecting to package')
+      ) {
+        setTimeout(() => navigate('/app/packing'), 1500)
+      } else if (
+        lowerReply.includes('redirecting you to the trip') || lowerReply.includes('redirecting to the trip') || lowerReply.includes('redirecting to trip') ||
+        lowerReply.includes('redirecting you to my trip') || lowerReply.includes('redirecting to my trip') || lowerReply.includes('redirecting to my trips')
+      ) {
+        setTimeout(() => navigate('/app/trips'), 1500)
+      } else if (
+        lowerReply.includes('redirecting you to the analytic') || lowerReply.includes('redirecting to the analytic') || lowerReply.includes('redirecting to analytic') ||
+        lowerReply.includes('redirecting you to travel analytic') || lowerReply.includes('redirecting to travel analytic')
+      ) {
+        setTimeout(() => navigate('/app/analytics'), 1500)
+      }
     },
     onError: (err) => {
       setMessages((prev) => prev.filter((m) => !m.pending))
@@ -99,6 +122,47 @@ export default function ConsultantPage() {
   const send = (text: string) => {
     const trimmed = text.trim()
     if (!trimmed || mutation.isPending) return
+
+    // Intercept user-initiated page redirections
+    const lowerText = trimmed.toLowerCase()
+    if (
+      lowerText.includes('go to budget') || lowerText.includes('navigate to budget') ||
+      lowerText.includes('goto budget') || lowerText.includes('redirect to budget') ||
+      lowerText.includes('show budget') || lowerText.includes('view budget')
+    ) {
+      navigate('/app/budget')
+      return
+    }
+    if (
+      lowerText.includes('go to package') || lowerText.includes('navigate to package') ||
+      lowerText.includes('goto package') || lowerText.includes('redirect to package') ||
+      lowerText.includes('go to packing') || lowerText.includes('navigate to packing') ||
+      lowerText.includes('goto packing') || lowerText.includes('redirect to packing') ||
+      lowerText.includes('show packing') || lowerText.includes('show package') ||
+      lowerText.includes('view packing') || lowerText.includes('view package')
+    ) {
+      navigate('/app/packing')
+      return
+    }
+    if (
+      lowerText.includes('go to trip') || lowerText.includes('navigate to trip') ||
+      lowerText.includes('goto trip') || lowerText.includes('redirect to trip') ||
+      lowerText.includes('show trip') || lowerText.includes('view trip') ||
+      lowerText.includes('go to my trips') || lowerText.includes('goto my trips')
+    ) {
+      navigate('/app/trips')
+      return
+    }
+    if (
+      lowerText.includes('go to analytic') || lowerText.includes('navigate to analytic') ||
+      lowerText.includes('goto analytic') || lowerText.includes('redirect to analytic') ||
+      lowerText.includes('show analytic') || lowerText.includes('view analytic') ||
+      lowerText.includes('go to travel analytics') || lowerText.includes('goto travel analytics')
+    ) {
+      navigate('/app/analytics')
+      return
+    }
+
     setError(null)
     setSaved(false)
     setMessages((prev) => [
@@ -223,6 +287,9 @@ export default function ConsultantPage() {
                   const lastAssistant = [...messages].reverse().find((m) => m.role === 'assistant' && !m.pending)
                   tripStore.add(collected, lastAssistant?.content ?? '')
                   setSaved(true)
+                  setTimeout(() => {
+                    navigate('/app/trips')
+                  }, 1000)
                 }}
               >
                 {saved ? 'Saved to My Trips ✓' : 'Save this trip'}

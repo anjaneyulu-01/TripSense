@@ -20,16 +20,21 @@ export interface SavedTrip {
 const KEY = 'tripsense.trips'
 const listeners = new Set<() => void>()
 
+let cachedTrips: SavedTrip[] | null = null
+
 function read(): SavedTrip[] {
+  if (cachedTrips !== null) return cachedTrips
   try {
-    return JSON.parse(localStorage.getItem(KEY) ?? '[]') as SavedTrip[]
+    cachedTrips = JSON.parse(localStorage.getItem(KEY) ?? '[]') as SavedTrip[]
   } catch {
-    return []
+    cachedTrips = []
   }
+  return cachedTrips
 }
 
 function write(trips: SavedTrip[]): void {
   localStorage.setItem(KEY, JSON.stringify(trips))
+  cachedTrips = trips
   listeners.forEach((l) => l())
 }
 
