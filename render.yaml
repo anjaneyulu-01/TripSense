@@ -1,10 +1,11 @@
 # Render Blueprint for TripSense Deployment
-# You can use this to deploy the web service by connecting your repository to Render.
+# Deploys both backend (Web Service) and frontend (Static Site) with automated URL linkage.
 services:
+  # 1. Backend Web Service
   - type: web
-    name: tripsense
+    name: tripsense-backend
     runtime: python
-    buildCommand: cd frontend && npm install && npm run build && cd ../backend && pip install -r requirements.txt
+    buildCommand: cd backend && pip install -r requirements.txt
     startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: APP_ENV
@@ -12,12 +13,33 @@ services:
       - key: PYTHON_VERSION
         value: "3.12"
       - key: CORS_ORIGINS
-        value: "https://tripsense-ur6o.onrender.com,http://localhost:5173"
+        fromService:
+          type: static
+          name: tripsense-frontend
+          property: host
       - key: JWT_SECRET
         generateValue: true  # Render will automatically generate a secure random secret key
       - key: MONGODB_URI
         sync: false          # Set this in your Render Dashboard (MongoDB Atlas connection string)
       - key: GROK_API_KEY
-        sync: false          # Set this in your Render Dashboard (xAI API Key)
+        sync: false          # Set this in your Render Dashboard (xAI API Key - optional)
       - key: GEMINI_API_KEY
         sync: false          # Set this in your Render Dashboard (Google Gemini API Key)
+
+  # 2. Frontend Static Site
+  - type: static
+    name: tripsense-frontend
+    buildCommand: cd frontend && npm install && npm run build
+    publishDir: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: tripsense-backend
+          property: host
+    routes:
+      # Rewrites all requests that don't match physical files to index.html
+      # This enables client-side routing (React Router) to work on refresh and direct navigation.
+      - type: rewrite
+        source: /*
+        destination: /index.html
