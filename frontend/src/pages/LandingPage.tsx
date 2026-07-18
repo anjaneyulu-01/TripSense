@@ -99,88 +99,115 @@ export default function LandingPage() {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-mesh">
-        <div className="mx-auto max-w-7xl px-4 py-20 text-center lg:px-8 lg:py-28">
-          <motion.div initial="hidden" animate="show" variants={fadeUp} transition={{ duration: 0.5 }}>
-            <Badge tone="primary" className="mx-auto mb-6">
-              <Sparkles className="h-3.5 w-3.5" /> Multilingual AI travel planning
-            </Badge>
-          </motion.div>
-          <motion.h1
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="mx-auto max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-6xl"
-          >
-            Travel Smarter with <span className="text-gradient">TripSense</span>
-          </motion.h1>
-          <motion.p
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mx-auto mt-6 max-w-2xl text-lg text-muted"
-          >
-            Plan your perfect journey using an intelligent multilingual AI travel
-            consultant — destinations, itineraries, budgets, and packing, all in one place.
-          </motion.p>
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
-          >
-            <Button
-              size="lg"
-              className="w-full sm:w-auto"
-              onClick={startAsGuest}
-              isLoading={guestLoading}
-            >
-              Start Planning <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-full sm:w-auto"
-              onClick={startAsGuest}
-              isLoading={guestLoading}
-            >
-              <Mic className="h-4 w-4" /> Try AI Consultant
-            </Button>
-          </motion.div>
-          {guestError && (
-            <p className="mt-4 text-sm text-danger">{guestError}</p>
-          )}
-          <p className="mt-4 text-xs text-muted">
-            No account needed — jump in as a guest. You can save your work later.
-          </p>
+      <section className="relative overflow-hidden bg-mesh py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+            {/* Left Column (Text & Action buttons) */}
+            <div className="text-center lg:col-span-7 lg:text-left">
+              <motion.div initial="hidden" animate="show" variants={fadeUp} transition={{ duration: 0.5 }}>
+                <Badge tone="primary" className="mx-auto mb-6 lg:mx-0">
+                  <Sparkles className="h-3.5 w-3.5" /> Multilingual AI travel planning
+                </Badge>
+              </motion.div>
+              <motion.h1
+                initial="hidden"
+                animate="show"
+                variants={fadeUp}
+                transition={{ duration: 0.5, delay: 0.05 }}
+                className="text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-6xl"
+              >
+                Travel Smarter with <span className="text-gradient">TripSense</span>
+              </motion.h1>
+              <motion.p
+                initial="hidden"
+                animate="show"
+                variants={fadeUp}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="mt-6 text-lg text-muted max-w-2xl mx-auto lg:mx-0"
+              >
+                Plan your perfect journey using an intelligent multilingual AI travel
+                consultant — destinations, itineraries, budgets, and packing, all in one place.
+              </motion.p>
+              <motion.div
+                initial="hidden"
+                animate="show"
+                variants={fadeUp}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start"
+              >
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto"
+                  onClick={startAsGuest}
+                  isLoading={guestLoading}
+                >
+                  Start Planning <ArrowRight className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                  onClick={startAsGuest}
+                  isLoading={guestLoading}
+                >
+                  <Mic className="h-4 w-4" /> Try AI Consultant
+                </Button>
+              </motion.div>
+              {guestError && (
+                <p className="mt-4 text-sm text-danger text-center lg:text-left">{guestError}</p>
+              )}
+              <p className="mt-4 text-xs text-muted">
+                No account needed — jump in as a guest. You can save your work later.
+              </p>
+            </div>
 
-          {/* Floating preview card */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="mx-auto mt-16 max-w-3xl"
-          >
-            <Card glass className="p-6 text-left">
-              <div className="flex items-start gap-3">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent text-white">
-                  <Sparkles className="h-5 w-5" />
-                </span>
-                <div className="space-y-3">
-                  <p className="rounded-2xl rounded-tl-sm bg-surface-2 px-4 py-2.5 text-sm text-foreground">
-                    5 days, ₹50,000, leaving from Hyderabad — we love beaches & food.
-                  </p>
-                  <p className="rounded-2xl rounded-tl-sm bg-primary/10 px-4 py-2.5 text-sm text-foreground">
-                    Perfect — Goa fits your budget and season. Here's a 5-day plan with
-                    beach mornings, seafood shacks, and a hidden sunset point most tourists miss…
-                  </p>
+            {/* Right Column (Premium Visual Travel Image & Overlay Dialog) */}
+            <div className="lg:col-span-5 relative mt-8 lg:mt-0">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative mx-auto max-w-md lg:max-w-none"
+              >
+                {/* Background mesh/glow effects */}
+                <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-primary/30 to-accent/30 opacity-40 blur-2xl" />
+                
+                {/* Image Container with Zoom effect */}
+                <div className="relative overflow-hidden rounded-3xl border border-border/80 shadow-2xl aspect-[4/3] bg-surface-1">
+                  <img
+                    src="/hero_travel.png"
+                    alt="Travel destination view"
+                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
                 </div>
-              </div>
-            </Card>
-          </motion.div>
+
+                {/* Overlapping Floating AI conversation widget */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.35 }}
+                  className="absolute -bottom-8 -left-4 right-4 sm:-left-8 sm:right-8"
+                >
+                  <Card glass className="p-4 shadow-xl border-border/40 backdrop-blur-md">
+                    <div className="flex items-start gap-3">
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-white">
+                        <Sparkles className="h-4 w-4" />
+                      </span>
+                      <div className="space-y-2 flex-grow">
+                        <p className="rounded-xl rounded-tl-none bg-surface-2 px-3.5 py-1.5 text-xs text-foreground/90 font-medium">
+                          5 days, ₹50,000, leaving from Hyderabad — beaches & food.
+                        </p>
+                        <p className="rounded-xl rounded-tl-none bg-primary/10 px-3.5 py-1.5 text-xs text-foreground font-medium border border-primary/10">
+                          Perfect — Goa fits your budget. Here's a 5-day plan with beach mornings and hidden sunset points…
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
