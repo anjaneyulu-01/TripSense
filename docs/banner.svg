@@ -1,0 +1,61 @@
+<svg width="1200" height="320" viewBox="0 0 1200 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TripSense — Travel Smarter">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6d3bf5"/>
+      <stop offset="0.55" stop-color="#5b6cf9"/>
+      <stop offset="1" stop-color="#2bb98a"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.04"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#1a1240" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="320" rx="28" fill="url(#bg)"/>
+  <circle cx="1010" cy="60" r="220" fill="url(#glow)"/>
+  <circle cx="180" cy="300" r="200" fill="url(#glow)" opacity="0.6"/>
+
+  <!-- Compass badge -->
+  <g transform="translate(96,110)" filter="url(#soft)">
+    <rect width="104" height="104" rx="26" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.35"/>
+    <g transform="translate(52,52)" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle r="30"/>
+      <path d="M14 -14 L4 4 L-14 14 L-4 -4 Z" fill="#ffffff" stroke="none"/>
+    </g>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="236" y="150" font-family="Segoe UI, Inter, system-ui, sans-serif" font-size="72" font-weight="800" fill="#ffffff">TripSense</text>
+  <text x="238" y="196" font-family="Segoe UI, Inter, system-ui, sans-serif" font-size="26" font-weight="600" fill="#ffffff" fill-opacity="0.92">Travel Smarter — your multilingual AI travel consultant</text>
+
+  <!-- Feature pills -->
+  <g font-family="Segoe UI, Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#ffffff">
+    <g transform="translate(238,232)">
+      <rect width="184" height="44" rx="22" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.3"/>
+      <text x="92" y="29" text-anchor="middle">🤖 AI Consultant</text>
+    </g>
+    <g transform="translate(434,232)">
+      <rect width="168" height="44" rx="22" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.3"/>
+      <text x="84" y="29" text-anchor="middle">🗺️ Itineraries</text>
+    </g>
+    <g transform="translate(614,232)">
+      <rect width="150" height="44" rx="22" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.3"/>
+      <text x="75" y="29" text-anchor="middle">💰 Budget</text>
+    </g>
+    <g transform="translate(776,232)">
+      <rect width="188" height="44" rx="22" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.3"/>
+      <text x="94" y="29" text-anchor="middle">🌦️ Weather &amp; Maps</text>
+    </g>
+    <g transform="translate(976,232)">
+      <rect width="150" height="44" rx="22" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.3"/>
+      <text x="75" y="29" text-anchor="middle">🎙️ Voice</text>
+    </g>
+  </g>
+</svg>

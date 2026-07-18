@@ -1,0 +1,166 @@
+@import 'tailwindcss';
+
+/* Class-based dark mode: toggling `.dark` on <html> flips the theme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Semantic HSL variables, remapped per theme, exposed to
+   Tailwind via @theme inline so utilities like `bg-surface`, `text-muted`,
+   `border-border` work everywhere.
+--------------------------------------------------------------------------- */
+:root {
+  --background: 240 40% 99%;
+  --surface: 0 0% 100%;
+  --surface-2: 235 38% 97%;
+  --foreground: 232 30% 16%;
+  --muted: 232 12% 50%;
+  --border: 232 28% 92%;
+  --input: 232 26% 93%;
+
+  --primary: 252 95% 66%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 226 92% 62%;
+  --accent-foreground: 0 0% 100%;
+
+  --success: 152 60% 42%;
+  --warning: 36 96% 52%;
+  --danger: 0 72% 57%;
+
+  --ring: 258 90% 62%;
+  --radius: 1.05rem;
+}
+
+.dark {
+  --background: 232 32% 8%;
+  --surface: 232 26% 11%;
+  --surface-2: 232 22% 15%;
+  --foreground: 228 24% 96%;
+  --muted: 228 14% 64%;
+  --border: 232 18% 22%;
+  --input: 232 18% 24%;
+
+  --primary: 258 90% 70%;
+  --primary-foreground: 232 30% 9%;
+  --accent: 221 90% 66%;
+  --accent-foreground: 232 30% 9%;
+
+  --ring: 258 90% 70%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-surface: hsl(var(--surface));
+  --color-surface-2: hsl(var(--surface-2));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-success: hsl(var(--success));
+  --color-warning: hsl(var(--warning));
+  --color-danger: hsl(var(--danger));
+  --color-ring: hsl(var(--ring));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 0.35rem);
+  --radius-sm: calc(var(--radius) - 0.5rem);
+
+  --font-sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  --shadow-soft: 0 4px 24px -6px hsl(262 83% 20% / 0.12);
+  --shadow-glow: 0 0 40px -8px hsl(262 83% 58% / 0.45);
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: hsl(var(--primary) / 0.25);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted) / 0.5);
+  }
+}
+
+@layer utilities {
+  /* Frosted-glass panel */
+  .glass {
+    background: hsl(var(--surface) / 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .text-gradient {
+    background: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-mesh {
+    background-image:
+      radial-gradient(at 20% 15%, hsl(var(--primary) / 0.18) 0px, transparent 55%),
+      radial-gradient(at 85% 25%, hsl(var(--accent) / 0.16) 0px, transparent 50%),
+      radial-gradient(at 60% 90%, hsl(var(--primary) / 0.1) 0px, transparent 55%);
+  }
+  /* Soft cool app backdrop (CampusCode-style subtle wash) */
+  .app-bg {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(1200px 480px at 12% -12%, hsl(var(--primary) / 0.06), transparent 60%),
+      radial-gradient(1000px 480px at 100% 0%, hsl(var(--accent) / 0.06), transparent 55%);
+  }
+  /* Brand gradient fill (for icon badges, buttons, avatars) */
+  .brand-gradient {
+    background-image: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+  /* Signature 3-stop top strip: purple -> blue -> green */
+  .brand-strip {
+    background-image: linear-gradient(
+      90deg,
+      hsl(var(--primary)),
+      hsl(var(--accent)) 55%,
+      hsl(var(--success))
+    );
+  }
+  /* Pills */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 9999px;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+}

@@ -1,0 +1,97 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TripSense app preview — AI Travel Consultant">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#6d3bf5"/><stop offset="1" stop-color="#3f7bf6"/>
+    </linearGradient>
+    <linearGradient id="strip" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#6d3bf5"/><stop offset="0.55" stop-color="#3f7bf6"/><stop offset="1" stop-color="#2bb98a"/>
+    </linearGradient>
+    <linearGradient id="app" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f4f5fd"/><stop offset="1" stop-color="#eef1fb"/>
+    </linearGradient>
+    <filter id="card" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#2a2560" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- App background -->
+  <rect width="1200" height="720" rx="20" fill="url(#app)"/>
+
+  <!-- Sidebar -->
+  <g>
+    <rect x="24" y="24" width="250" height="672" rx="18" fill="#ffffff" opacity="0.55"/>
+    <!-- logo -->
+    <rect x="40" y="40" width="218" height="56" rx="14" fill="#ffffff" filter="url(#card)"/>
+    <rect x="56" y="54" width="28" height="28" rx="8" fill="url(#brand)"/>
+    <text x="96" y="74" font-family="Segoe UI, Inter, sans-serif" font-size="18" font-weight="800" fill="#1b1d2b">Trip<tspan fill="#6d3bf5">Sense</tspan></text>
+    <!-- nav items -->
+    <g font-family="Segoe UI, Inter, sans-serif" font-size="15" font-weight="600">
+      <!-- active -->
+      <rect x="40" y="118" width="218" height="46" rx="12" fill="#6d3bf5" opacity="0.10"/>
+      <rect x="52" y="128" width="26" height="26" rx="8" fill="url(#brand)"/>
+      <text x="92" y="146" fill="#6d3bf5">AI Consultant</text>
+      <g fill="#6b7180">
+        <text x="92" y="196">Dashboard</text><rect x="52" y="178" width="26" height="26" rx="8" fill="#e7e9f3"/>
+        <text x="92" y="246">Budget Planner</text><rect x="52" y="228" width="26" height="26" rx="8" fill="#e7e9f3"/>
+        <text x="92" y="296">Packing Checklist</text><rect x="52" y="278" width="26" height="26" rx="8" fill="#e7e9f3"/>
+        <text x="92" y="346">Weather &amp; Maps</text><rect x="52" y="328" width="26" height="26" rx="8" fill="#e7e9f3"/>
+        <text x="92" y="396">My Trips</text><rect x="52" y="378" width="26" height="26" rx="8" fill="#e7e9f3"/>
+        <text x="92" y="446">Travel Analytics</text><rect x="52" y="428" width="26" height="26" rx="8" fill="#e7e9f3"/>
+        <text x="92" y="496">Settings</text><rect x="52" y="478" width="26" height="26" rx="8" fill="#e7e9f3"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Topbar -->
+  <g font-family="Segoe UI, Inter, sans-serif">
+    <text x="300" y="58" font-size="11" font-weight="800" letter-spacing="3" fill="#8b90a3">TRIPSENSE AI</text>
+    <text x="300" y="88" font-size="26" font-weight="800" fill="#6d3bf5">Plan your perfect journey.</text>
+    <!-- pills -->
+    <g font-size="13" font-weight="700">
+      <rect x="820" y="46" width="96" height="34" rx="17" fill="#22b07d" opacity="0.14"/>
+      <text x="868" y="68" text-anchor="middle" fill="#1a9a6c">AI healthy</text>
+      <rect x="926" y="46" width="86" height="34" rx="17" fill="#ffffff" stroke="#e2e5f0"/>
+      <text x="969" y="68" text-anchor="middle" fill="#4a4f63">🌙 Light</text>
+      <circle cx="1050" cy="63" r="20" fill="url(#brand)"/>
+      <text x="1050" y="68" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">GE</text>
+    </g>
+  </g>
+
+  <!-- Hero AI card -->
+  <g filter="url(#card)">
+    <rect x="300" y="118" width="876" height="562" rx="20" fill="#ffffff"/>
+    <rect x="300" y="118" width="876" height="7" rx="4" fill="url(#strip)"/>
+  </g>
+  <!-- card header -->
+  <rect x="330" y="150" width="40" height="40" rx="12" fill="url(#brand)"/>
+  <text x="384" y="168" font-family="Segoe UI, Inter, sans-serif" font-size="17" font-weight="800" fill="#6d3bf5">TripSense AI</text>
+  <text x="384" y="188" font-family="Segoe UI, Inter, sans-serif" font-size="12" fill="#8b90a3">Your intelligent travel consultant</text>
+  <rect x="1064" y="156" width="82" height="30" rx="15" fill="#22b07d" opacity="0.14"/>
+  <text x="1105" y="176" text-anchor="middle" font-family="Segoe UI, Inter, sans-serif" font-size="12" font-weight="700" fill="#1a9a6c">● Online</text>
+
+  <!-- greeting -->
+  <circle cx="738" cy="288" r="34" fill="url(#brand)"/>
+  <path d="M738 270 l6 12 12 6 -12 6 -6 12 -6 -12 -12 -6 12 -6 z" fill="#fff"/>
+  <text x="738" y="356" text-anchor="middle" font-family="Segoe UI, Inter, sans-serif" font-size="30" font-weight="800" fill="#6d3bf5">Hey Explorer!</text>
+  <text x="738" y="388" text-anchor="middle" font-family="Segoe UI, Inter, sans-serif" font-size="14" fill="#6b7180">Tell me about your trip — I'll ask only what I need, then build your plan.</text>
+
+  <!-- suggestion chips -->
+  <g font-family="Segoe UI, Inter, sans-serif" font-size="13" fill="#2b2f40">
+    <rect x="360" y="420" width="360" height="58" rx="14" fill="#fff" stroke="#e7e9f3"/>
+    <text x="384" y="454">→ Plan a 5-day beach trip from Hyderabad</text>
+    <rect x="756" y="420" width="360" height="58" rx="14" fill="#fff" stroke="#e7e9f3"/>
+    <text x="780" y="454">→ Weekend getaway near Bangalore</text>
+    <rect x="360" y="490" width="360" height="58" rx="14" fill="#fff" stroke="#e7e9f3"/>
+    <text x="384" y="524">→ Family mountain trip with kids</text>
+    <rect x="756" y="490" width="360" height="58" rx="14" fill="#fff" stroke="#e7e9f3"/>
+    <text x="780" y="524">→ Budget backpacking across Rajasthan</text>
+  </g>
+
+  <!-- composer -->
+  <circle cx="356" cy="628" r="22" fill="#fff" stroke="#e7e9f3"/>
+  <text x="356" y="634" text-anchor="middle" font-size="16">🎙️</text>
+  <rect x="392" y="606" width="620" height="44" rx="22" fill="#f4f5fb" stroke="#e7e9f3"/>
+  <text x="416" y="633" font-family="Segoe UI, Inter, sans-serif" font-size="14" fill="#9aa0b2">Type a prompt and press send…</text>
+  <rect x="1028" y="606" width="118" height="44" rx="22" fill="url(#brand)"/>
+  <text x="1087" y="633" text-anchor="middle" font-family="Segoe UI, Inter, sans-serif" font-size="14" font-weight="700" fill="#fff">Send ▸</text>
+</svg>
