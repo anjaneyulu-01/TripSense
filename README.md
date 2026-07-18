@@ -262,6 +262,10 @@ sequenceDiagram
 Users and conversations are persisted in MongoDB. (Trips currently persist client-side in `localStorage`;
 see the [roadmap](#-roadmap) for server-side sync.)
 
+> [!TIP]
+> **Performance & React State Caching**  
+> To optimize rendering performance, client-side trip data uses reference-caching (`tripStore.ts`). Since `useSyncExternalStore` evaluates values using strict identity checks (`Object.is`), the store caches the parsed JSON representation. A new array instance is only created when changes are written (e.g. rename, favorite, delete), completely avoiding re-render loops and keeping UI transitions fluid.
+
 ```mermaid
 erDiagram
     USER ||--o{ CONVERSATION : owns
@@ -318,6 +322,21 @@ sequenceDiagram
     API-->>FE: new token pair
     FE->>API: retry original request ✅
 ```
+
+---
+
+## 🚀 One-Click Render Deployment
+
+This repository is pre-configured with a [render.yaml](file:///d:/PROJECTS/PromptWars/render.yaml) blueprint. You can deploy both the frontend static site and backend web service in under 3 minutes with zero manual URL wiring:
+
+1. Log into your [Render Dashboard](https://dashboard.render.com/).
+2. Navigate to **Blueprints** and click **New Blueprint Instance**.
+3. Connect your repository.
+4. Fill in your environment variables:
+   - `MONGODB_URI` *(MongoDB Atlas URI)*
+   - `GROQ_API_KEY` *(Groq API Key)*
+   - `GEMINI_API_KEY` *(Google Gemini API Key)*
+5. Click **Approve**. Render will automatically link the service hosts, configure the CORS white-list, set up Python 3.12, compile your Vite frontend, and mount the React Router SPA rewrite rules (`/*` -> `/index.html`) so your page refreshes and direct links never return a 404!
 
 ---
 
