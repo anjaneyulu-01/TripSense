@@ -102,6 +102,11 @@ def create_app() -> FastAPI:
 
     app.include_router(api_router, prefix=settings.api_v1_prefix)
 
+    @app.get("/ping", tags=["system"])
+    async def ping() -> dict:
+        """Lightweight endpoint for uptime monitoring tools (e.g. Uptime Robot) returning 200 OK."""
+        return {"status": "ok", "message": "pong"}
+
     # --- Serve React frontend in production if dist exists ---
     backend_app_dir = Path(__file__).resolve().parent
     root_dir = backend_app_dir.parent.parent
