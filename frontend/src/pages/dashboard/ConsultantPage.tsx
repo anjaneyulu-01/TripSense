@@ -377,11 +377,38 @@ function TypingDots() {
   )
 }
 
+const SUGGESTIONS = [
+  {
+    name: 'Goa',
+    tag: 'Beach',
+    emoji: '🏖️',
+    desc: 'Sun-soaked beaches, vibrant shacks, and rich Portuguese history.',
+  },
+  {
+    name: 'Manali',
+    tag: 'Mountain',
+    emoji: '🏔️',
+    desc: 'Snowy peaks, adventure sports, and scenic Himalayan valley views.',
+  },
+  {
+    name: 'Rajasthan',
+    tag: 'Cultural',
+    emoji: '🕌',
+    desc: 'Majestic forts, desert safaris, and rich royal heritage.',
+  },
+  {
+    name: 'Kerala',
+    tag: 'Nature',
+    emoji: '🌴',
+    desc: 'Serene backwaters, spice gardens, tea hills, and houseboats.',
+  },
+]
+
 function EmptyState({ name, onPick }: { name: string; onPick: (text: string) => void }) {
   return (
-    <div className="flex h-full flex-col items-center justify-center px-6 text-center">
+    <div className="flex h-full flex-col items-center justify-start overflow-y-auto px-6 py-8 text-center [scrollbar-width:none]">
       <motion.span
-        className="grid h-16 w-16 place-items-center rounded-2xl brand-gradient text-white shadow-[var(--shadow-glow)]"
+        className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl brand-gradient text-white shadow-[var(--shadow-glow)]"
         animate={{ scale: [1, 1.06, 1] }}
         transition={{ duration: 2.5, repeat: Infinity }}
       >
@@ -394,6 +421,8 @@ function EmptyState({ name, onPick }: { name: string; onPick: (text: string) => 
         I'm your intelligent travel consultant. Tell me about your trip and I'll
         ask only what I still need — then build your plan.
       </p>
+
+      {/* Starter Prompts */}
       <div className="mt-7 grid w-full max-w-2xl gap-3 sm:grid-cols-2">
         {STARTERS.map((s) => (
           <button
@@ -405,6 +434,33 @@ function EmptyState({ name, onPick }: { name: string; onPick: (text: string) => 
             {s}
           </button>
         ))}
+      </div>
+
+      {/* Destination Suggestions */}
+      <div className="mt-10 w-full max-w-2xl text-left">
+        <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted/70">Suggested Destinations</h3>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {SUGGESTIONS.map((d) => (
+            <button
+              key={d.name}
+              onClick={() => onPick(`I want to plan a trip to ${d.name}. Recommend a complete travel itinerary and budget for a ${d.tag.toLowerCase()} trip.`)}
+              className="flex items-start gap-3 rounded-[var(--radius-md)] border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[var(--shadow-soft)]"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary text-lg">
+                {d.emoji}
+              </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-semibold text-foreground text-sm">{d.name}</h4>
+                  <span className="rounded bg-accent/10 px-1.5 py-0.5 text-[10px] font-medium text-accent">
+                    {d.tag}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-muted leading-relaxed">{d.desc}</p>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )

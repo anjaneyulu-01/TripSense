@@ -31,6 +31,29 @@ export default function BudgetPage() {
   const [amounts, setAmounts] = useState<Record<string, number>>(() =>
     Object.fromEntries(DEFAULTS.map((c) => [c.key, Math.round((c.pct / 100) * 50000)])),
   )
+  const [days, setDays] = useState(5)
+
+  const dayBreakdown = useMemo(() => {
+    const dailyBase = total / days
+    return Array.from({ length: days }, (_, idx) => {
+      let pct = 1.0
+      if (idx === 0) pct = 1.2
+      if (idx === days - 1) pct = 1.1
+      if (idx > 0 && idx < days - 1) pct = 0.9
+
+      const dayVal = Math.round(dailyBase * pct)
+      return {
+        day: idx + 1,
+        amount: dayVal,
+        label:
+          idx === 0
+            ? 'Arrival & Transport'
+            : idx === days - 1
+              ? 'Return Journey'
+              : 'Exploring & Activities',
+      }
+    })
+  }, [total, days])
 
   const allocated = useMemo(
     () => Object.values(amounts).reduce((a, b) => a + (b || 0), 0),
@@ -124,6 +147,41 @@ export default function BudgetPage() {
                   </div>
                 )
               })}
+            </CardContent>
+          </Card>
+
+          {/* Day-wise Budget Breakdown */}
+          <Card>
+            <CardContent className="pt-6 space-y-4">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <h3 className="font-semibold text-foreground">Day-wise Budget Allocation</h3>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted">Trip Duration:</span>
+                  <input
+                    type="number"
+                    min={1}
+                    max={15}
+                    value={days}
+                    onChange={(e) => setDays(Math.max(1, Math.min(15, Number(e.target.value))))}
+                    className="w-14 rounded-md border border-input bg-surface-2 px-2 py-1 text-center text-sm font-semibold focus:outline-none focus:ring-1 focus:ring-primary"
+                  />
+                  <span className="text-xs text-muted">Days</span>
+                </div>
+              </div>
+
+              <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
+                {dayBreakdown.map((d) => (
+                  <div key={d.day} className="flex items-center justify-between border-b border-border/40 pb-2 text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-primary">Day {d.day}</span>
+                      <span className="text-muted text-[11px]">({d.label})</span>
+                    </div>
+                    <span className="font-semibold text-foreground">
+                      {formatCurrency(d.amount, currency)}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>
