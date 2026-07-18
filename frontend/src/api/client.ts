@@ -6,7 +6,7 @@ import axios, {
 import { tokenStore } from '@/lib/tokenStore'
 import type { ApiError, TokenPair } from '@/types'
 
-const API_BASE = '/api/v1'
+const API_BASE = (import.meta.env.VITE_API_URL || '') + '/api/v1'
 
 export const api: AxiosInstance = axios.create({
   baseURL: API_BASE,

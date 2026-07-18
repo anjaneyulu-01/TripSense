@@ -1,0 +1,19 @@
+# Render Blueprint for TripSense Deployment
+# You can use this to deploy the web service by connecting your repository to Render.
+services:
+  - type: web
+    name: tripsense
+    runtime: python
+    buildCommand: cd frontend && npm install && npm run build && cd ../backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true  # Render will automatically generate a secure random secret key
+      - key: MONGODB_URI
+        sync: false          # Set this in your Render Dashboard (MongoDB Atlas connection string)
+      - key: GROK_API_KEY
+        sync: false          # Set this in your Render Dashboard (xAI API Key)
+      - key: GEMINI_API_KEY
+        sync: false          # Set this in your Render Dashboard (Google Gemini API Key)

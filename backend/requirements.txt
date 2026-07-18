@@ -22,6 +22,8 @@ httpx==0.28.1
 # --- Utils ---
 python-multipart==0.0.20
 tenacity==9.0.0
+aiofiles==24.1.0
+
 
 # --- Dev / test ---
 pytest==8.3.4

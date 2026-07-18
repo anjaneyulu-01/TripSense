@@ -7,13 +7,16 @@ and the versioned API router.
 from __future__ import annotations
 
 import logging
+import os
 import time
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app import __version__
 from app.api.routes import api_router
@@ -99,9 +102,36 @@ def create_app() -> FastAPI:
 
     app.include_router(api_router, prefix=settings.api_v1_prefix)
 
-    @app.get("/", tags=["system"])
-    async def root() -> dict:
-        return {"name": "TripSense API", "version": __version__, "docs": "/docs"}
+    # --- Serve React frontend in production if dist exists ---
+    backend_app_dir = Path(__file__).resolve().parent
+    root_dir = backend_app_dir.parent.parent
+    frontend_dist_dir = root_dir / "frontend" / "dist"
+
+    if os.path.exists(frontend_dist_dir):
+        logger.info("Serving frontend static files from: %s", frontend_dist_dir)
+        if os.path.exists(frontend_dist_dir / "assets"):
+            app.mount("/assets", StaticFiles(directory=str(frontend_dist_dir / "assets")), name="assets")
+
+        @app.get("/{catchall:path}", tags=["frontend"])
+        async def serve_frontend(catchall: str):
+            # Exclude backend API routes
+            if catchall.startswith("api/") or catchall.startswith("api"):
+                return JSONResponse(status_code=404, content={"detail": "Not Found"})
+
+            file_path = frontend_dist_dir / catchall
+            if file_path.is_file():
+                return FileResponse(str(file_path))
+
+            index_path = frontend_dist_dir / "index.html"
+            if index_path.is_file():
+                return FileResponse(str(index_path))
+
+            return JSONResponse(status_code=404, content={"detail": "Not Found"})
+    else:
+        logger.warning("Frontend dist directory not found at: %s. Frontend will not be served.", frontend_dist_dir)
+        @app.get("/", tags=["system"])
+        async def root() -> dict:
+            return {"name": "TripSense API", "version": __version__, "docs": "/docs"}
 
     return app
 

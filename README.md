@@ -449,5 +449,3 @@ provider layers are language-agnostic, so **adding a language is a one-line chan
 ---
 
 <p align="center"><sub>Built with FastAPI · React · MongoDB · and a seamless Grok → Groq → Gemini AI core.</sub></p>
-#   T r i p S e n s e  
- 
